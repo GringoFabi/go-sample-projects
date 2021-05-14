@@ -80,5 +80,4 @@ fabric.properties
 .idea/modules
 .idea/vcs.xml
 .idea/.gitignore
-*.iml
 *.ipr
