@@ -17,6 +17,9 @@ docker build . -t go-docker
 docker run -p 3000:3000 go-docker
 ```
 
+## go-graphql
+The module contains a very small sample app which introduces and showcases basic concepts of GraphQL and their usage in Golang. 
+
 ## rest-server
 This module contains a sketch of a rest-server built with the [gorilla framework](https://github.com/gorilla).
 Apart from that, this sample project contains some basic methods for working with self-declared data-classes (e.g. an [``Article`` class](rest-server/data.go)).
