@@ -20,6 +20,11 @@ docker run -p 3000:3000 go-docker
 ## go-graphql
 The module contains a very small sample app which introduces and showcases basic concepts of GraphQL and their usage in Golang. 
 
+## go-microservices
+The microservices-module contains a small sample project which shows how to structure your application to realize a microservice's pattern.
+In this sample a user-service is created which then is exposed to be accessible via a client.
+Moreover, the application is connected to a postgres database, so that newly created user-data will be stored there.
+
 ## rest-server
 This module contains a sketch of a rest-server built with the [gorilla framework](https://github.com/gorilla).
 Apart from that, this sample project contains some basic methods for working with self-declared data-classes (e.g. an [``Article`` class](rest-server/data.go)).
