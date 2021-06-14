@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/go-graphql/go-graphql.iml" filepath="$PROJECT_DIR$/go-graphql/go-graphql.iml" />
       <module fileurl="file://$PROJECT_DIR$/go-graphql-99designs/go-graphql-99designs.iml" filepath="$PROJECT_DIR$/go-graphql-99designs/go-graphql-99designs.iml" />
       <module fileurl="file://$PROJECT_DIR$/go-microservices/go-microservices.iml" filepath="$PROJECT_DIR$/go-microservices/go-microservices.iml" />
+      <module fileurl="file://$PROJECT_DIR$/go-rabbitmq-basic/go-rabbitmq-basic.iml" filepath="$PROJECT_DIR$/go-rabbitmq-basic/go-rabbitmq-basic.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/go-sample-projects.iml" filepath="$PROJECT_DIR$/.idea/go-sample-projects.iml" />
       <module fileurl="file://$PROJECT_DIR$/rest-server/rest-server.iml" filepath="$PROJECT_DIR$/rest-server/rest-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/websocket/websocket.iml" filepath="$PROJECT_DIR$/websocket/websocket.iml" />
