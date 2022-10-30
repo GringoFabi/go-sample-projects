@@ -31,7 +31,7 @@ func NewHandler() *handler {
 
 func continueOnError(c echo.Context) error {
 	if r := recover(); r != nil {
-		message := fmt.Sprintf("Handling error: ", r)
+		message := fmt.Sprintf("Handling error: %s", r)
 		fmt.Println("Recovered from panic!")
 		fmt.Println(message)
 		
