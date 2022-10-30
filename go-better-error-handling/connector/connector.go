@@ -61,18 +61,13 @@ func SetupData(client *mongo.Client, ) {
 	fmt.Println("Inserted multiple documents: ", insertResult.InsertedIDs)
 }
 
-func GetTrainer(client *mongo.Client, name string) Trainer {
+func GetTrainer(client *mongo.Client, name string) (Trainer, error) {
 	collection := client.Database("test").Collection("trainers")
 
 	filter := bson.D{{Key: "name", Value: name}}
 	var result Trainer
 
 	err := collection.FindOne(context.TODO(), filter).Decode(&result)
-	if err != nil {
-		log.Fatal(err)
-	}
 
-	fmt.Printf("Found a single document: %+v\n", result)
-
-	return result
+	return result, err
 }
