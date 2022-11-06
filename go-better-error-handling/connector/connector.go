@@ -11,9 +11,9 @@ import (
 )
 
 type Trainer struct {
-    Name string
-    Age  int
-    City string
+    Name string `json:"name"`
+    Age  int    `json:"age"`
+    City string `json:"city"`
 }
 
 const uri = "mongodb://user:pass@localhost:27017/"
@@ -70,4 +70,16 @@ func GetTrainer(client *mongo.Client, name string) (Trainer, error) {
 	err := collection.FindOne(context.TODO(), filter).Decode(&result)
 
 	return result, err
+}
+
+func PostTrainer(client *mongo.Client, trainer *Trainer) error {
+	collection := client.Database("test").Collection("trainers")
+
+	result, err := collection.InsertOne(context.TODO(), trainer)
+
+	if err == nil {
+		log.Default().Printf("added new trainer to db: %s", result.InsertedID)
+	}
+
+	return err
 }
