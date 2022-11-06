@@ -5,6 +5,9 @@ import "fmt"
 const (
 	IncompleteTrainerDataErr = "provided trainer misses data"
 	MissingPathParamErr = "expected path param was not provided"
+	MongoFindQueryErr = "could not find document in db"
+	MongoPostQueryErr = "could not save document in db"
+	UnmarshalTrainerErr = "could not read provided trainer data"
 )
 
 type HandledError struct {

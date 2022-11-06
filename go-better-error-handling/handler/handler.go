@@ -11,13 +11,9 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-type HandledError struct {
-	Message string
-	Code int
-}
-
 type handler struct {
     Client *mongo.Client
+	EchoErrorHandler error_handler.EchoErrorHandler
 }
 
 type Handler interface {
@@ -34,18 +30,10 @@ func NewHandler() *handler {
 
 	return &handler{
 		Client: client,
+		EchoErrorHandler: error_handler.EchoErrorHandler{
+			Name: "trainer EP echo error handler",
+		},
 	}
-}
-
-func continueOnError(c echo.Context) error {
-	if r := recover(); r != nil {
-		message := fmt.Sprintf("Handling error: %s", r)
-		fmt.Println("Recovered from panic!")
-		fmt.Println(message)
-		
-		return c.JSON(http.StatusOK, message)
-	}
-	return nil
 }
 
 func (h handler) HelloWorld(c echo.Context) error {
@@ -53,35 +41,60 @@ func (h handler) HelloWorld(c echo.Context) error {
 }
 
 func (h handler) GetTrainer(c echo.Context) error {
-	defer continueOnError(c)
+	defer h.EchoErrorHandler.ContinueOnError(c)
 	name := c.Param("name")
 	if name == "" {
-		panic(errors.New(error_handler.MissingPathParamErr))
+		panic(
+			error_handler.HandledError {
+				Err: errors.New(error_handler.MissingPathParamErr),
+				Code: 400,
+			},
+		)
 	}
 
 	trainer, err := connector.GetTrainer(h.Client, name)
 	if err != nil {
-		panic(err)
+		panic(
+			error_handler.HandledError {
+				Err: errors.New(error_handler.MongoFindQueryErr),
+				Code: 404,
+			},
+		)
 	}
 
 	return c.JSON(http.StatusOK, trainer)
 }
 
 func (h handler) PostTrainer(c echo.Context) error {
-	defer continueOnError(c)
+	defer h.EchoErrorHandler.ContinueOnError(c)
 	
 	trainer := new(connector.Trainer)
 	if err := c.Bind(trainer); err != nil {
-		panic(err)
+		panic(
+			error_handler.HandledError {
+				Err: errors.New(error_handler.UnmarshalTrainerErr),
+				Code: 400,
+			},
+		)
 	}
 
 	fmt.Printf("{name: %s, age; %d, city: %s}\n", trainer.Name, trainer.Age, trainer.City)
 	if trainer.Name == "" || trainer.Age == 0 || trainer.City == "" {
-		panic(errors.New(error_handler.IncompleteTrainerDataErr))
+		panic(
+			error_handler.HandledError {
+				Err: errors.New(error_handler.IncompleteTrainerDataErr),
+				Code: 400,
+			},
+		)
 	}
 
 	if err := connector.PostTrainer(h.Client, trainer); err != nil {
-		panic(err)
+		panic(
+			error_handler.HandledError {
+				Err: errors.New(error_handler.MongoPostQueryErr),
+				Code: 404,
+			},
+		)
 	}
 
 	return c.JSON(http.StatusOK, trainer)
